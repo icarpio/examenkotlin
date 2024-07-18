@@ -3,6 +3,7 @@ package com.example.omdb.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.omdb.R
 import com.example.omdb.data.Movie
 import com.example.omdb.databinding.ActivityDetailBinding
@@ -25,13 +26,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getMovieDetails(imdbID: String) {
+        binding.progressBar.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.IO).launch {
             val response = RetrofitProvider.apiService.getMovieDetails(imdbID)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     val movie = response.body()
-                    println("Error: $movie")
                     if (movie != null) {
+                        binding.progressBar.visibility = View.GONE
                         createUI(movie)
                     }
                 } else {
