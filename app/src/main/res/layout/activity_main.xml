@@ -5,10 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
+    <LinearLayout
+        android:id="@+id/blockLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Enter movie title" />
+        <Button
+            android:id="@+id/SearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar" />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone"/>
 
 </LinearLayout>

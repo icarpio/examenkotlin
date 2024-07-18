@@ -3,7 +3,7 @@ package com.example.omdb.data
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-    val Actors: String,
+    @SerializedName("Actors") var actors: String,
     val Awards: String,
     val BoxOffice: String,
     @SerializedName("Country") var country: String,

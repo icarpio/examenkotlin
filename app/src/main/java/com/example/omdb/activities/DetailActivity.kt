@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.omdb.R
+import com.example.omdb.data.Movie
 import com.example.omdb.databinding.ActivityDetailBinding
 import com.example.omdb.network.RetrofitProvider
 import com.squareup.picasso.Picasso
@@ -20,7 +21,6 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val imdbID = intent.getStringExtra("IMDB_ID") ?: return
-        Log.e("Detail ID", imdbID)
         getMovieDetails(imdbID)
     }
 
@@ -30,9 +30,9 @@ class DetailActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     val movie = response.body()
-                    movie?.let {
-                        Log.e("Detail s", movie.toString())
-                        //Picasso.get().load(it.poster).into(binding.imageViewPoster)
+                    println("Error: $movie")
+                    if (movie != null) {
+                        createUI(movie)
                     }
                 } else {
                     println("Error: ${response.message()}")
@@ -40,4 +40,19 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun createUI(movie: Movie){
+        Picasso.get().load(movie.poster).into(binding.posterImage)
+        binding.countryText.text = movie.country
+        binding.titleText.text = movie.title
+        binding.yearText.text = movie.year
+        binding.runtimeText.text = movie.runtime
+        binding.directorText.text = movie.director
+        binding.plotText.text = movie.plot
+        binding.genreText.text = movie.genre
+        binding.actorsText.text = movie.actors
+
+    }
+
+
 }
